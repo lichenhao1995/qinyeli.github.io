@@ -1,11 +1,11 @@
 ---
 layout: post
 title:  "Makefile Cheatsheet"
-date:   2016-03-28 16:01:00 -0400
-categories: Makefile
+date:   2016-03-28
+categories: Makefile cheatsheet
 ---
 
-#Makefile Cheatsheet
+# Makefile Cheatsheet
 
 * `$@`: name of the file being generated
 * `$?`: first prerequisite (usually the source file)
