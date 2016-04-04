@@ -20,7 +20,7 @@ categories: cheatsheet
 * Special variables	
 	* `$?`: return value of the most recent command (0 if succeed)
 	* `$_`: most recent parameter
-	* `$1`, $2, $3: positional parameters
+	* `$1, $2, $3`: positional parameters
 	* `$@`: array of all positional parameters {$1, $2, $3 ...}
 	* `$#`: number of propositional parameters
 
@@ -58,25 +58,35 @@ categories: cheatsheet
 * `$`: end of a string
 * `.`: any character
 
-* `grep -c [regex] [file]`: `-c` means count
-* `grep -v [regex] [file]`: `-f` means invert match
+* `grep -c [regex] [dir]`: `-c` means count
+* `grep -v [regex] [dir]`: `-v` means invert match
+* `grep -f [regex] [file]: `-f` means file
 * `git grep` searches staged files, but not untracked files
 
 ## Makefile
-* dependency / prerequisite
+* format:
+
+~~~
+target: dependency / prerequisite
+	command
+~~~
+
 * `.PHONY`: targets that are not files
 * `make all`: runs the first target that does not start with .
+* `-B`: always make
 * special variables
 	* `$@`: name of the file being generated
 	* `$?`: first prerequisite (usually the source file)
 	* `$^`: all prerequisite
 
 ## GDB
-* `bread`: break point (e.g. `break if x == 0`, `break main.c::20`, `break function`)
+* `break`: break point (e.g. `break if x == 0`, `break main.c::20`, `break function`)
 * `step`: step into
 * `next`: step over
 * `finish`: step out of
 * `continue`: to next breakpoint or end
+* `frame`: where am i
+* `set`: e.g. `set x=1`
 * `up`: to caller
 * `down`: to callee (after `up`)
 * `print`: print value of variable
