@@ -18,5 +18,9 @@ url: "https://qinyeli.github.io" # the base hostname & protocol for your site
 github_username:  qinyeli
 
 # Build settings
-#markdown: kramdown
-markdown: redcarpet
+markdown: kramdown
+kramdown:
+  input: GFM # Enable GitHub Flavored Markdown (fenced code blocks)
+  hard_wrap: false
+highlighter: rouge
+#markdown: redcarpet
