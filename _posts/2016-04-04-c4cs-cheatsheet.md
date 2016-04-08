@@ -60,7 +60,7 @@ categories: cheatsheet
 
 * `grep -c [regex] [dir]`: `-c` means count
 * `grep -v [regex] [dir]`: `-v` means invert match
-* `grep -f [regex] [file]: `-f` means file
+* `grep -f [regex] [file]`: `-f` means file
 * `git grep` searches staged files, but not untracked files
 
 ## Makefile
@@ -75,7 +75,7 @@ target: dependency / prerequisite
 * `make all`: runs the first target that does not start with .
 * `-B`: always make
 * special variables
-	* `$@`: name of the file being generated
+	* `$@`: name of the target
 	* `$?`: first prerequisite (usually the source file)
 	* `$^`: all prerequisite
 
