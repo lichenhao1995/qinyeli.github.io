@@ -455,7 +455,7 @@ pre[class*="language-"] {
 <li>Protection/Controlled Sharing (Swap file/ Regular file backed mem)</li>
 </ol>
 
-<h3 id="toc_2">Address translation (by MMU)</h3>
+<h3 id="toc_2">Address Translation (by MMU)</h3>
 
 <ul>
 <li>Static translation: tranlate addresses before execution</li>
@@ -498,7 +498,7 @@ pre[class*="language-"] {
 <li>Large page size =&gt; internal fragmentation</li>
 </ul>
 
-<h4 id="toc_6">Multi-level paging (slower, more flexible)</h4>
+<h4 id="toc_6">Multi-level Paging (slower, more flexible)</h4>
 
 <ul>
 <li>Take less space becuase of allocation on need</li>
@@ -508,7 +508,7 @@ pre[class*="language-"] {
 
 <h3 id="toc_7">Caching</h3>
 
-<h4 id="toc_8">Tranlation lookaside buffer (TLB)</h4>
+<h4 id="toc_8">Tranlation Lookaside Buffer (TLB)</h4>
 
 <ul>
 <li>TLB caches PTEs</li>
@@ -532,19 +532,19 @@ pre[class*="language-"] {
 <li>Write through</li>
 </ul>
 
-<h3 id="toc_11">Deferring work</h3>
+<h4 id="toc_11">Deferring Work</h4>
 
 <ul>
 <li>avoid zero filling a page</li>
 <li>avoid writing back (dirty page)</li>
 <li>copy on write (make fork faster)</li>
-<li>map (what?)</li>
 </ul>
 
 <h3 id="toc_12">Page Table</h3>
 
 <ul>
 <li>Page table for kernel address have to be stored in physical memory</li>
+<li>Page table for user address coudl be stored in kernel&#39;s virtual address space or in physical memory</li>
 <li>Page table bits
 
 <ul>
@@ -558,23 +558,22 @@ pre[class*="language-"] {
 
 <h3 id="toc_13">Kernel vs. User Address Spaces</h3>
 
-<p>tranlation table =&gt; mode bit =&gt; sys call =&gt; interrupt vector table</p>
+<p>protected data =&gt; tranlation data =&gt; mode bit =&gt; sys call =&gt; interrupt vector table</p>
 
 <ul>
 <li>Kernel has its own address space</li>
-<li>Most of the kernel&#39;s virtual address space is pinned to physical memory.</li>
+<li>Most of the kernel&#39;s virtual address space is pinned to physical memory</li>
 <li>How does kernel access user&#39;s address space?
 
 <ul>
 <li>Via physical address</li>
 <li>Map kernel address space into every process&#39;s address space
-=&gt; Trap to kernel does not change address spaces; it just allows computer to access both OS and user parts of the address space
 
 <ul>
+<li>Trap to kernel does not change address spaces; it just allows computer to access both OS and user parts of the address space</li>
 <li>Pro: page tables of processes that are not running can be swapped in to the disk</li>
 </ul></li>
 </ul></li>
-<li>Only kernel can change the tranlation data</li>
 <li>Mode bit: kernel mode/ user mode</li>
 <li>Only kernel can execute privilege instructions provided by CPU</li>
 <li>Who changes the mode bit?
@@ -585,10 +584,16 @@ pre[class*="language-"] {
 
 <ul>
 <li>Exceptions</li>
-<li>System call</li>
+<li><strong>System call</strong> =&gt; functions in interrupt vector table</li>
 </ul></li>
 </ul></li>
-<li><p>user mode =&gt; kernel mode (All these are atomic)</p>
+<li>Administrative processis still running user model</li>
+</ul>
+
+<h4 id="toc_14">System Call</h4>
+
+<ul>
+<li>user mode =&gt; kernel mode (All these are atomic)
 
 <ul>
 <li>Set the mode bit to kernel mode</li>
@@ -602,11 +607,14 @@ pre[class*="language-"] {
 <li>Switch to the kernel address space</li>
 <li>Jump to the sys call interrupt_handler</li>
 </ul></li>
-<li><p>Interrupt vector table (const, only set in boot)</p></li>
-<li><p>Administrative processis still running user model</p></li>
+<li>Interrupt vector table (set in boot or changed by kernel )
+
+<ul>
+<li>Stores the location for interrupt_handler</li>
+</ul></li>
 </ul>
 
-<h3 id="toc_14">Process Creation</h3>
+<h3 id="toc_15">Process Creation</h3>
 
 <ul>
 <li>Allocate process control block</li>
@@ -617,7 +625,7 @@ pre[class*="language-"] {
 <li>Jump to start of program</li>
 </ul>
 
-<h3 id="toc_15">Multiprocess Issues</h3>
+<h3 id="toc_16">Multiprocess Issues</h3>
 
 <ul>
 <li>Global vs. Local Replacement</li>
@@ -630,16 +638,16 @@ pre[class*="language-"] {
 </ul></li>
 </ul>
 
-<h4 id="toc_16">Process Creation</h4>
+<h4 id="toc_17">Process Creation</h4>
 
 <ol>
 <li>fork()</li>
 <li>exec(): replace new process&#39;s data address space with data from program executable</li>
 </ol>
 
-<h2 id="toc_17">I/O and File Systems</h2>
+<h2 id="toc_18">I/O and File Systems</h2>
 
-<h3 id="toc_18">Disk I/O</h3>
+<h3 id="toc_19">Disk I/O</h3>
 
 <p>Abstraction provided by OS:</p>
 
@@ -692,7 +700,7 @@ pre[class*="language-"] {
 <li>No overwrite =&gt; page program operation, erase operation before rewrite</li>
 </ul>
 
-<h3 id="toc_19">File Systems</h3>
+<h3 id="toc_20">File Systems</h3>
 
 <ul>
 <li>File system is a persistent data structure</li>
@@ -708,7 +716,7 @@ pre[class*="language-"] {
 <li>Most files are small, but most bytes are in the large files</li>
 </ul>
 
-<h4 id="toc_20">How to find files? How to organize files?</h4>
+<h4 id="toc_21">How to find files? How to organize files?</h4>
 
 <ul>
 <li>File header (inode) that stores
@@ -721,7 +729,7 @@ pre[class*="language-"] {
 </ul></li>
 </ul>
 
-<h5 id="toc_21">Contiguous allocation (corresponds to base and bound)</h5>
+<h5 id="toc_22">Contiguous allocation (corresponds to base and bound)</h5>
 
 <ul>
 <li>An array of blocks</li>
@@ -731,7 +739,7 @@ pre[class*="language-"] {
 <li>External fragmentation</li>
 </ul>
 
-<h5 id="toc_22">Indexed files (corresponds to paging)</h5>
+<h5 id="toc_23">Indexed files (corresponds to paging)</h5>
 
 <ul>
 <li>An array of block pointers</li>
@@ -739,7 +747,7 @@ pre[class*="language-"] {
 <li>Potentially slow sequencial access</li>
 </ul>
 
-<h6 id="toc_23">Multi-level indexed files</h6>
+<h6 id="toc_24">Multi-level indexed files</h6>
 
 <ul>
 <li>A tree of block pointers</li>
@@ -747,7 +755,7 @@ pre[class*="language-"] {
 <li>Potentially more accesses to read a file block =&gt; unbalanced tree</li>
 </ul>
 
-<h4 id="toc_24">File Caching</h4>
+<h4 id="toc_25">File Caching</h4>
 
 <ul>
 <li>Virtual memory starts from memory and adds disk for larger capacity</li>
@@ -766,7 +774,7 @@ pre[class*="language-"] {
 </ul></li>
 </ul>
 
-<h4 id="toc_25">Reliability &amp; Durability</h4>
+<h4 id="toc_26">Reliability &amp; Durability</h4>
 
 <ul>
 <li>Ordering</li>
@@ -778,7 +786,7 @@ pre[class*="language-"] {
 </ul></li>
 </ul>
 
-<h5 id="toc_26">Shadowing (enable time machine)</h5>
+<h5 id="toc_27">Shadowing (enable time machine)</h5>
 
 <ol>
 <li>Update the shadow</li>
@@ -786,14 +794,14 @@ pre[class*="language-"] {
 <li>Update the new shadow</li>
 </ol>
 
-<h6 id="toc_27">Shadow Paging</h6>
+<h6 id="toc_28">Shadow Paging</h6>
 
 <ul>
 <li>Based on the observation that file system is a tree</li>
 <li>Only shadow nodes that are related to the transaction</li>
 </ul>
 
-<h5 id="toc_28">Logging</h5>
+<h5 id="toc_29">Logging</h5>
 
 <ol>
 <li>Write modifications to log, (which is stored in the disk)</li>
@@ -806,7 +814,7 @@ pre[class*="language-"] {
 <li>If only logging metadata, called journalling</li>
 </ul>
 
-<h5 id="toc_29">Log-structrued File System (LFS)</h5>
+<h5 id="toc_30">Log-structrued File System (LFS)</h5>
 
 <ul>
 <li>Optimize file system for writes (sequential)</li>
@@ -818,11 +826,11 @@ pre[class*="language-"] {
 
 <p>Problem: external fragmentation =&gt; log cleaner</p>
 
-<h2 id="toc_30">Networking and Distributed System</h2>
+<h2 id="toc_31">Networking and Distributed System</h2>
 
-<h3 id="toc_31">Networking</h3>
+<h3 id="toc_32">Networking</h3>
 
-<h4 id="toc_32">Socket</h4>
+<h4 id="toc_33">Socket</h4>
 
 <p>app -&gt; socket -&gt; NIC(network interface card) -&gt; NIC -&gt; socket -&gt; app</p>
 
@@ -831,7 +839,7 @@ pre[class*="language-"] {
 <li>bounded consumer-producer buffer</li>
 </ul>
 
-<h4 id="toc_33">IP (Internet Protocol)</h4>
+<h4 id="toc_34">IP (Internet Protocol)</h4>
 
 <ul>
 <li>UDP: message-oriented protocol, send data in chuncks (message bound visible), unreliable, fast (e.g. for live vedio streaming)</li>
@@ -861,7 +869,7 @@ pre[class*="language-"] {
 </ul></li>
 </ul>
 
-<h3 id="toc_34">Distributed System</h3>
+<h3 id="toc_35">Distributed System</h3>
 
 <p>Why do we want distributed System?</p>
 
@@ -944,7 +952,7 @@ void product_stub() {
     send(sock, &amp;status, sizeof(status));
 }</code></pre></div>
 
-<h4 id="toc_35">Ordering of distributed system</h4>
+<h4 id="toc_36">Ordering of distributed system</h4>
 
 <ul>
 <li>To synchronize in distributed system, we use message to communicate rather than shared memory.</li>
@@ -967,9 +975,9 @@ void product_stub() {
 <li>Each receive event set the local clock <code>Cj = max{Cj + 1, Ci + 1}</code></li>
 </ol>
 
-<h4 id="toc_36">Distributed File System</h4>
+<h4 id="toc_37">Distributed File System</h4>
 
-<h5 id="toc_37">Client side caching</h5>
+<h5 id="toc_38">Client side caching</h5>
 
 <ul>
 <li>Put more work to the client</li>
@@ -986,7 +994,7 @@ void product_stub() {
 </ul></li>
 </ul>
 
-<h5 id="toc_38">Partition of work among multiple server</h5>
+<h5 id="toc_39">Partition of work among multiple server</h5>
 
 <ul>
 <li>Distribute volumes (subtrees of file system) over multiple server (usually with administrative boundary)</li>
@@ -1000,7 +1008,7 @@ void product_stub() {
 <li>But they do not solve the hotspot problem</li>
 </ul>
 
-<h5 id="toc_39">Replication (for fault tolerance)</h5>
+<h5 id="toc_40">Replication (for fault tolerance)</h5>
 
 <ul>
 <li>Client, Primary, Backup</li>
@@ -1009,9 +1017,9 @@ void product_stub() {
 <li>Can also balance load on read requests</li>
 </ul>
 
-<h4 id="toc_40">Fault Tolerance</h4>
+<h4 id="toc_41">Fault Tolerance</h4>
 
-<h5 id="toc_41">Fail-stop failure</h5>
+<h5 id="toc_42">Fail-stop failure</h5>
 
 <ol>
 <li>On failure, a node stops running</li>
@@ -1023,7 +1031,7 @@ void product_stub() {
 <li>Require f+1 nodes to tolerate f failures</li>
 </ul>
 
-<h5 id="toc_42">Crash failure</h5>
+<h5 id="toc_43">Crash failure</h5>
 
 <ol>
 <li>On failure, a node stops running</li>
@@ -1035,7 +1043,7 @@ void product_stub() {
 <li>Require 2f+1 nodes to tolerate f failures</li>
 </ul>
 
-<h5 id="toc_43">Byzantine failure</h5>
+<h5 id="toc_44">Byzantine failure</h5>
 
 <ul>
 <li>Safety: if agree, agree on the same value</li>
@@ -1052,7 +1060,7 @@ void product_stub() {
 <li><p>Failures have to be independent =&gt; expensive</p></li>
 </ul>
 
-<h5 id="toc_44">Replicated State Machine</h5>
+<h5 id="toc_45">Replicated State Machine</h5>
 
 <ul>
 <li>Same starting state</li>
